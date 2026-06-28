@@ -92,3 +92,8 @@ process.on('unhandledRejection', (err, promise) => {
   // Close server & exit process
   server.close(() => process.exit(1));
 });
+
+app.use(cors({
+  origin: ['https://finserve-fin.vercel.app', 'https://finserve-wine.vercel.app'],
+  credentials: true
+}));
