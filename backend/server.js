@@ -38,11 +38,14 @@ app.use(helmet({
 }));
 
 // Enable CORS
+// Enable CORS
 app.use(cors({
-  origin: '*', // Allow frontend connection
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: ['https://finserve-fin.vercel.app', 'https://finserve-wine.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
+app.options('*', cors());
 
 // Body parser
 app.use(express.json());
@@ -92,8 +95,3 @@ process.on('unhandledRejection', (err, promise) => {
   // Close server & exit process
   server.close(() => process.exit(1));
 });
-
-app.use(cors({
-  origin: ['https://finserve-fin.vercel.app', 'https://finserve-wine.vercel.app'],
-  credentials: true
-}));
