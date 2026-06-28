@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://your-render-url.onrender.com/api',
+  baseURL: 'https://finserve-backend-qqwf.onrender.com/api',
   headers: {
     'Content-Type': 'application/json'
   }
