@@ -50,6 +50,24 @@ const PublicNavbar = () => {
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-3">
+            <Link
+              to="/"
+              onClick={(e) => {
+                if (window.location.pathname === '/') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+              className="px-3 py-2 rounded-lg text-sm font-semibold text-brand-text-dark hover:bg-brand-green-light transition-colors min-h-[44px] inline-flex items-center"
+            >
+              Home
+            </Link>
+            <a
+              href="#about"
+              className="px-3 py-2 rounded-lg text-sm font-semibold text-brand-text-dark hover:bg-brand-green-light transition-colors min-h-[44px] inline-flex items-center mr-2"
+            >
+              About
+            </a>
+
             {!loading && user ? (
               <div className="relative" ref={dropdownRef}>
                 <button
@@ -88,20 +106,12 @@ const PublicNavbar = () => {
                 )}
               </div>
             ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="btn-outline px-5 py-2 rounded-lg text-sm font-semibold inline-flex items-center justify-center"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/register"
-                  className="btn-primary px-5 py-2 rounded-lg text-sm font-semibold inline-flex items-center justify-center"
-                >
-                  Register
-                </Link>
-              </>
+              <Link
+                to="/register"
+                className="btn-primary px-5 py-2 rounded-lg text-sm font-semibold inline-flex items-center justify-center"
+              >
+                Register
+              </Link>
             )}
           </div>
 
@@ -120,9 +130,28 @@ const PublicNavbar = () => {
       {mobileOpen && (
         <div className="md:hidden border-t border-brand-green-border bg-brand-white">
           <div className="landing-container py-4 flex flex-col gap-2">
+            <Link
+              to="/"
+              onClick={() => {
+                closeMobile();
+                if (window.location.pathname === '/') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+              className="px-4 py-3 rounded-lg text-sm font-semibold text-brand-text-dark hover:bg-brand-green-light"
+            >
+              Home
+            </Link>
+            <a
+              href="#about"
+              onClick={closeMobile}
+              className="px-4 py-3 rounded-lg text-sm font-semibold text-brand-text-dark hover:bg-brand-green-light"
+            >
+              About
+            </a>
             {!loading && user ? (
               <>
-                <div className="px-3 py-2 text-sm font-semibold text-brand-text-dark border-b border-brand-green-border mb-1">
+                <div className="px-3 py-2 text-sm font-semibold text-brand-text-dark border-b border-brand-green-border mb-1 mt-2">
                   {user.name}
                 </div>
                 <Link
@@ -142,22 +171,13 @@ const PublicNavbar = () => {
                 </button>
               </>
             ) : (
-              <>
-                <Link
-                  to="/login"
-                  onClick={closeMobile}
-                  className="btn-outline w-full px-4 py-3 rounded-lg text-sm font-semibold text-center"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/register"
-                  onClick={closeMobile}
-                  className="btn-primary w-full px-4 py-3 rounded-lg text-sm font-semibold text-center"
-                >
-                  Register
-                </Link>
-              </>
+              <Link
+                to="/register"
+                onClick={closeMobile}
+                className="btn-primary w-full px-4 py-3 rounded-lg text-sm font-semibold text-center mt-2"
+              >
+                Register
+              </Link>
             )}
           </div>
         </div>

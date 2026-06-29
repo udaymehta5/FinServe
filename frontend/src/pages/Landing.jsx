@@ -1,7 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PublicNavbar from '../components/PublicNavbar';
+import { useAuth } from '../context/AuthContext';
 import {
   Wallet,
   PiggyBank,
@@ -16,6 +17,10 @@ import {
   ListPlus,
   LineChart,
   ArrowRight,
+  Mail,
+  Lock,
+  Globe,
+  ChevronDown
 } from 'lucide-react';
 
 const fadeUp = {
@@ -35,47 +40,98 @@ const SectionWrapper = ({ children, className = '' }) => (
   </motion.div>
 );
 
-const HeroChartPreview = () => (
-  <div className="relative w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
-    <div className="absolute -top-3 -right-2 rotate-3 bg-brand-green-dark text-brand-white text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
-      Live preview
-    </div>
-    <div className="landing-card rounded-xl p-5 spreadsheet-grid shadow-md">
-      <div className="bg-brand-white/90 rounded-lg p-4 space-y-4">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold text-brand-text-dark">Monthly Overview</span>
-          <span className="text-xs text-brand-text-light">Jun 2025</span>
-        </div>
-        <div className="grid grid-cols-3 gap-2 text-center">
-          {[
-            { label: 'Income', value: '$4,200', color: 'text-brand-green-dark' },
-            { label: 'Spent', value: '$2,840', color: 'text-brand-text-mid' },
-            { label: 'Saved', value: '$1,360', color: 'text-brand-green-mid' },
-          ].map((stat) => (
-            <div key={stat.label} className="bg-brand-green-light rounded-lg py-2 px-1 border border-brand-green-border">
-              <p className="text-[11px] text-brand-text-light">{stat.label}</p>
-              <p className={`text-sm font-bold ${stat.color}`}>{stat.value}</p>
+const LoginForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email || !password) return;
+
+    setIsSubmitting(true);
+    const result = await login(email, password);
+    setIsSubmitting(false);
+
+    if (result && result.success) {
+      navigate('/dashboard');
+    }
+  };
+
+  return (
+    <div className="relative w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
+
+      <div className="landing-card rounded-xl p-6 spreadsheet-grid shadow-md relative overflow-hidden">
+        <div className="bg-brand-white/95 rounded-lg p-5 space-y-4 shadow-sm border border-brand-green-border relative z-10 glass-panel">
+          <h3 className="text-xl font-bold text-finText mb-1">Welcome</h3>
+          <p className="text-xs text-finMuted mb-6">Enter Your Details</p>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-[11px] font-bold text-finText uppercase tracking-wider mb-2">
+                Email Address
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-3 h-4 w-4 text-finMuted" />
+                <input
+                  type="email"
+                  required
+                  placeholder="name@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2.5 bg-finBackground border border-finBorder rounded-lg text-sm text-finText placeholder-finMuted focus:outline-none focus:border-finGreen focus:ring-1 focus:ring-finGreen transition-all duration-200"
+                />
+              </div>
             </div>
-          ))}
-        </div>
-        <div className="flex items-end justify-between gap-1.5 h-24 px-1">
-          {[40, 65, 45, 80, 55, 70, 50].map((h, i) => (
-            <div
-              key={i}
-              className="flex-1 rounded-t-sm bg-brand-green-mid/80"
-              style={{ height: `${h}%` }}
-            />
-          ))}
-        </div>
-        <div className="flex justify-between text-[10px] text-brand-text-light px-1">
-          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d) => (
-            <span key={d}>{d}</span>
-          ))}
+
+            <div>
+              <label className="block text-[11px] font-bold text-finText uppercase tracking-wider mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 h-4 w-4 text-finMuted" />
+                <input
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2.5 bg-finBackground border border-finBorder rounded-lg text-sm text-finText placeholder-finMuted focus:outline-none focus:border-finGreen focus:ring-1 focus:ring-finGreen transition-all duration-200"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full flex items-center justify-center gap-2 mt-4 py-3 rounded-lg bg-finGreen hover:bg-finGreenHover text-white font-bold text-sm tracking-wider uppercase transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed group neon-glow"
+            >
+              {isSubmitting ? (
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              ) : (
+                <>
+                  <span>Sign In</span>
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="mt-4 text-center">
+            <p className="text-[11px] text-finMuted">
+              Don't have an account?{' '}
+              <Link to="/register" className="text-finGreen font-bold hover:underline">
+                Sign up
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Landing = () => {
   const budgetingCards = [
@@ -125,7 +181,7 @@ const Landing = () => {
         <div className="landing-container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center py-8 md:py-12">
             <SectionWrapper className="lg:pr-4">
-              <span className="inline-block text-xs font-semibold uppercase tracking-widest text-brand-green-dark bg-brand-green-light border border-brand-green-border px-3 py-1 rounded-full mb-5 -rotate-1">
+              <span className="inline-block text-xs font-semibold uppercase tracking-widest text-brand-green-dark bg-brand-green-light border border-brand-green-border px-3 py-1 rounded-full mb-5">
                 Personal finance, simplified
               </span>
               <h1
@@ -141,22 +197,15 @@ const Landing = () => {
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Link
                   to="/register"
-                  className="btn-primary px-6 py-3 rounded-xl text-sm font-semibold inline-flex items-center justify-center gap-2 w-full sm:w-auto"
-                >
-                  Get Started
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  to="/login"
                   className="btn-outline px-6 py-3 rounded-xl text-sm font-semibold inline-flex items-center justify-center w-full sm:w-auto"
                 >
-                  Login
+                  Register
                 </Link>
               </div>
             </SectionWrapper>
 
             <SectionWrapper>
-              <HeroChartPreview />
+              <LoginForm />
             </SectionWrapper>
           </div>
         </div>
@@ -281,25 +330,90 @@ const Landing = () => {
       </section>
 
       {/* 3f. Footer */}
-      <footer className="py-8 md:py-10 bg-brand-white border-t border-brand-green-border">
-        <div className="landing-container">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-brand-text-mid">
-            <p className="font-medium text-brand-text-dark">FinServe © 2025</p>
-            <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-              <Link to="/" className="hover:text-brand-green-dark transition-colors min-h-[44px] inline-flex items-center">
-                Home
+      <footer className="bg-[#0b3d32] pt-[60px] pb-6 px-4 md:px-8">
+        <div className="landing-container max-w-7xl mx-auto">
+
+          {/* ZONE 1 - Main Footer Body */}
+          <div className="flex flex-col md:flex-row gap-12 md:gap-8 mb-12">
+
+            {/* LEFT COLUMN (25% on desktop) */}
+            <div className="w-full md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left">
+              {/* Logo & Brand */}
+              <Link to="/" className="flex items-center gap-2 mb-2">
+                <div className="h-8 w-8 rounded-md bg-white flex items-center justify-center font-bold text-[#0b3d32] text-sm">
+                  FS
+                </div>
+                <span className="text-xl font-bold text-white tracking-tight">
+                  FinServe
+                </span>
               </Link>
-              <Link to="/login" className="hover:text-brand-green-dark transition-colors min-h-[44px] inline-flex items-center">
-                Login
-              </Link>
-              <Link to="/register" className="hover:text-brand-green-dark transition-colors min-h-[44px] inline-flex items-center">
-                Register
-              </Link>
-              <a href="#about" className="hover:text-brand-green-dark transition-colors min-h-[44px] inline-flex items-center">
-                About
-              </a>
-            </nav>
+              <p className="!text-white text-[12px] leading-relaxed mb-6 max-w-[250px]">
+                Take control of your finances, one budget at a time.
+              </p>
+
+
+              {/* Language Selector */}
+              <div className="flex flex-col items-center md:items-start">
+                <span className="text-[10px] text-white/60 font-bold uppercase tracking-wider mb-2" style={{ fontVariant: 'small-caps' }}>
+                  Language
+                </span>
+                <button className="flex items-center gap-2 text-white/85 text-sm hover:text-white transition-colors">
+                  <Globe className="h-4 w-4" />
+                  <span>English</span>
+                  <ChevronDown className="h-4 w-4 opacity-70" />
+                </button>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMNS (75% on desktop) */}
+            <div className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-8 text-center sm:text-left">
+
+              {/* Column 1 */}
+              <div className="flex flex-col gap-4">
+                <h4 className="text-white font-bold text-sm uppercase tracking-wider">Quick Links</h4>
+                <a href="#about" className="text-white/85 hover:text-white hover:underline text-[14px] transition-all">About</a>
+                <a href="#" className="text-white/85 hover:text-white hover:underline text-[14px] transition-all">Careers</a>
+                <Link to="/dashboard" className="text-white/85 hover:text-white hover:underline text-[14px] transition-all">Dashboard</Link>
+              </div>
+
+              {/* Column 2 */}
+              <div className="flex flex-col gap-4">
+                <h4 className="text-white font-bold text-sm uppercase tracking-wider">Support</h4>
+                <a href="#" className="text-white/85 hover:text-white hover:underline text-[14px] transition-all">Contact</a>
+                <a href="#" className="text-white/85 hover:text-white hover:underline text-[14px] transition-all">Help Center</a>
+              </div>
+
+
+            </div>
           </div>
+
+          {/* ZONE 2 - Divider */}
+          <div className="h-px w-full bg-white/15 mb-4"></div>
+
+          {/* ZONE 3 - Disclaimer */}
+          <div className="py-4 text-center md:text-left">
+            <p className="!text-white text-[12px] leading-relaxed">
+              Disclaimer: FinServe is a technology-enabled personal finance platform. We do not provide certified financial advice. Please consult a licensed advisor for financial decisions.
+            </p>
+          </div>
+
+          {/* ZONE 4 - Divider */}
+          <div className="h-px w-full bg-white/15 mb-6"></div>
+
+          {/* ZONE 5 - Bottom Bar */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[13px] text-white">
+            <div className="text-center md:text-left">
+              <p className="!text-white">© 2026 FinServe. All Rights Reserved.</p>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-white/70">
+              <a href="#" className="hover:text-white transition-colors">Privacy</a>
+              <span>·</span>
+              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <span>·</span>
+              <a href="#" className="hover:text-white transition-colors">Use Policy</a>
+            </div>
+          </div>
+
         </div>
       </footer>
     </div>

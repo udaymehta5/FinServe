@@ -8,7 +8,6 @@ import Toast from './components/Toast';
 
 // Pages
 import Landing from './pages/Landing';
-import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
@@ -21,7 +20,7 @@ import Settings from './pages/Settings';
 // Layout Wrapper for Protected pages
 const ProtectedLayout = ({ children }) => {
   return (
-    <div className="min-h-screen w-screen bg-finBackground text-finText flex relative">
+    <div className="min-h-screen w-screen text-finText flex relative bg-transparent">
       {/* Sidebar Navigation */}
       <Navbar />
       
@@ -49,14 +48,6 @@ const App = () => {
           />
 
           {/* Public Authentication Pages */}
-          <Route
-            path="/login"
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
           <Route
             path="/register"
             element={

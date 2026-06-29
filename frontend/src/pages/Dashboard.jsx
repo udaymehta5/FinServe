@@ -29,7 +29,7 @@ import {
   Area
 } from 'recharts';
 
-const COLORS = ['#00FF88', '#00D973', '#34D399', '#059669', '#10B981', '#06B6D4', '#3B82F6', '#6366F1', '#8B5CF6'];
+const COLORS = ['#00C766', '#00A355', '#34D399', '#059669', '#10B981', '#06B6D4', '#3B82F6', '#6366F1', '#8B5CF6'];
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -200,14 +200,14 @@ const Dashboard = () => {
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={charts.expenseTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1B1B1B" />
-                  <XAxis dataKey="date" stroke="#9CA3AF" fontSize={10} />
-                  <YAxis stroke="#9CA3AF" fontSize={10} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
+                  <XAxis dataKey="date" stroke="#64748B" fontSize={10} />
+                  <YAxis stroke="#64748B" fontSize={10} />
                   <Tooltip 
-                    contentStyle={{ backgroundColor: '#0F0F0F', borderColor: '#1B1B1B', color: '#FFFFFF' }}
-                    labelStyle={{ color: '#00FF88' }}
+                    contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', color: '#1A2E25', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                    labelStyle={{ color: '#00C766', fontWeight: 'bold' }}
                   />
-                  <Line type="monotone" dataKey="amount" stroke="#00FF88" strokeWidth={2.5} activeDot={{ r: 6 }} dot={{ strokeWidth: 1 }} />
+                  <Line type="monotone" dataKey="amount" stroke="#00C766" strokeWidth={2.5} activeDot={{ r: 6 }} dot={{ strokeWidth: 1 }} />
                 </LineChart>
               </ResponsiveContainer>
             )}
@@ -225,12 +225,12 @@ const Dashboard = () => {
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={charts.incomeVsExpense} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1B1B1B" />
-                  <XAxis dataKey="month" stroke="#9CA3AF" fontSize={10} />
-                  <YAxis stroke="#9CA3AF" fontSize={10} />
-                  <Tooltip contentStyle={{ backgroundColor: '#0F0F0F', borderColor: '#1B1B1B', color: '#FFFFFF' }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
+                  <XAxis dataKey="month" stroke="#64748B" fontSize={10} />
+                  <YAxis stroke="#64748B" fontSize={10} />
+                  <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', color: '#1A2E25', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
                   <Legend wrapperStyle={{ fontSize: 10 }} />
-                  <Bar dataKey="income" name="Income" fill="#00FF88" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="income" name="Income" fill="#00C766" radius={[4, 4, 0, 0]} />
                   <Bar dataKey="expense" name="Expense" fill="#EF4444" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
@@ -264,7 +264,7 @@ const Dashboard = () => {
                           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                       </Pie>
-                      <Tooltip contentStyle={{ backgroundColor: '#0F0F0F', borderColor: '#1B1B1B', color: '#FFFFFF' }} />
+                      <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', color: '#1A2E25', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
@@ -297,20 +297,20 @@ const Dashboard = () => {
                 <AreaChart data={forecastData.forecastGraph} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorProjected" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#00FF88" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#00FF88" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#00C766" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#00C766" stopOpacity={0}/>
                     </linearGradient>
                     <linearGradient id="colorTarget" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.2}/>
                       <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1B1B1B" />
-                  <XAxis dataKey="month" stroke="#9CA3AF" fontSize={10} />
-                  <YAxis stroke="#9CA3AF" fontSize={10} />
-                  <Tooltip contentStyle={{ backgroundColor: '#0F0F0F', borderColor: '#1B1B1B', color: '#FFFFFF' }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
+                  <XAxis dataKey="month" stroke="#64748B" fontSize={10} />
+                  <YAxis stroke="#64748B" fontSize={10} />
+                  <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', color: '#1A2E25', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
                   <Legend wrapperStyle={{ fontSize: 10 }} />
-                  <Area type="monotone" name="Your Project Growth" dataKey="projectedSavings" stroke="#00FF88" strokeWidth={2} fillOpacity={1} fill="url(#colorProjected)" />
+                  <Area type="monotone" name="Your Project Growth" dataKey="projectedSavings" stroke="#00C766" strokeWidth={2} fillOpacity={1} fill="url(#colorProjected)" />
                   <Area type="monotone" name="Target Trajectory" dataKey="targetRequired" stroke="#3B82F6" strokeWidth={1.5} strokeDasharray="4 4" fillOpacity={1} fill="url(#colorTarget)" />
                 </AreaChart>
               </ResponsiveContainer>
@@ -319,6 +319,8 @@ const Dashboard = () => {
         </div>
 
       </div>
+
+
     </div>
   );
 };

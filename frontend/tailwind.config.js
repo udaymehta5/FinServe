@@ -7,13 +7,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        finBackground: '#050505',
-        finCard: '#0F0F0F',
-        finGreen: '#00FF88',
-        finGreenHover: '#00D973',
-        finBorder: '#1B1B1B',
-        finText: '#FFFFFF',
-        finMuted: '#9CA3AF',
+        finBackground: '#FFFFFF',
+        finCard: 'rgba(255, 255, 255, 0.85)',
+        finGreen: '#00C766',
+        finGreenHover: '#00A355',
+        finBorder: '#E2E8F0',
+        finText: '#1A2E25',
+        finMuted: '#64748B',
         brand: {
           'green-dark': 'var(--brand-green-dark)',
           'green-mid': 'var(--brand-green-mid)',

@@ -150,9 +150,9 @@ const Register = () => {
 
           {/* Switch page link */}
           <div className="mt-6 text-center">
-            <p className="text-xs text-finMuted">
+            <p className="text-[11px] text-finMuted">
               Already have an account?{' '}
-              <Link to="/login" className="text-finGreen font-bold hover:underline">
+              <Link to="/" className="text-finGreen font-bold hover:underline">
                 Sign in
               </Link>
             </p>
