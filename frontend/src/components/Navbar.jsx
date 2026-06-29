@@ -9,13 +9,17 @@ import {
   MessageSquare, 
   Settings, 
   LogOut,
-  User as UserIcon
+  User as UserIcon,
+  Home,
+  Info
 } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
 
   const navigation = [
+    { name: 'Home', to: '/', icon: Home },
+    { name: 'About', to: '/about', icon: Info },
     { name: 'Dashboard', to: '/dashboard', icon: LayoutDashboard },
     { name: 'Expenses', to: '/expenses', icon: CreditCard },
     { name: 'Income', to: '/income', icon: TrendingUp },

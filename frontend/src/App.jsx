@@ -11,6 +11,7 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import About from './pages/About';
 import Expenses from './pages/Expenses';
 import Income from './pages/Income';
 import Analytics from './pages/Analytics';
@@ -72,6 +73,14 @@ const App = () => {
               element={
                 <ProtectedLayout>
                   <Dashboard />
+                </ProtectedLayout>
+              } 
+            />
+            <Route 
+              path="/about" 
+              element={
+                <ProtectedLayout>
+                  <About />
                 </ProtectedLayout>
               } 
             />
