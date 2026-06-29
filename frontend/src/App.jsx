@@ -20,12 +20,12 @@ import Settings from './pages/Settings';
 // Layout Wrapper for Protected pages
 const ProtectedLayout = ({ children }) => {
   return (
-    <div className="min-h-screen w-screen text-finText flex relative bg-transparent">
+    <div className="min-h-screen w-screen text-finText flex relative bg-transparent pb-16 md:pb-0">
       {/* Sidebar Navigation */}
       <Navbar />
       
       {/* Scrollable Content Pane */}
-      <main className="flex-1 ml-64 min-h-screen p-8 overflow-y-auto">
+      <main className="flex-1 ml-0 md:ml-64 min-h-screen p-4 md:p-8 overflow-y-auto">
         {children}
       </main>
     </div>
