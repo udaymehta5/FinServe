@@ -3,6 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --brand-green-dark:   #1a7a4a;
+  --brand-green-mid:    #2ea86b;
+  --brand-green-light:  #e6f4ed;
+  --brand-green-border: #a8d5b5;
+  --brand-white:        #ffffff;
+  --brand-off-white:    #f5faf7;
+  --brand-text-dark:    #1a2e25;
+  --brand-text-mid:     #4a7a5e;
+  --brand-text-light:   #7aab8e;
+}
+
 @layer base {
   body {
     background-color: #050505;
@@ -12,6 +24,55 @@
     padding: 0;
     overflow-x: hidden;
   }
+}
+
+/* Public landing page theme */
+.landing-page {
+  background-color: var(--brand-off-white);
+  color: var(--brand-text-mid);
+}
+
+.landing-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.btn-primary {
+  background-color: var(--brand-green-dark);
+  color: var(--brand-white);
+  border: 2px solid var(--brand-green-dark);
+  min-height: 44px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-green-mid);
+  border-color: var(--brand-green-mid);
+}
+
+.btn-outline {
+  background-color: var(--brand-white);
+  color: var(--brand-green-dark);
+  border: 2px solid var(--brand-green-dark);
+  min-height: 44px;
+  transition: background-color 0.2s;
+}
+
+.btn-outline:hover {
+  background-color: var(--brand-green-light);
+}
+
+.landing-card {
+  background-color: var(--brand-white);
+  border: 1px solid var(--brand-green-border);
+}
+
+.spreadsheet-grid {
+  background-image:
+    linear-gradient(var(--brand-green-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--brand-green-border) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 /* Custom premium fintech styles */

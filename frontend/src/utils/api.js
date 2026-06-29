@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://finserve-backend-qqwf.onrender.com/api',
+  baseURL: import.meta.env.DEV ? 'http://localhost:5000/api' : 'https://finserve-backend-qqwf.onrender.com/api',
   headers: {
     'Content-Type': 'application/json'
   }
