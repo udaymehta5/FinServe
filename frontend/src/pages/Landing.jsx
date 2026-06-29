@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { GoogleLogin } from '@react-oauth/google';
 import PublicNavbar from '../components/PublicNavbar';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -44,7 +45,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -118,6 +119,27 @@ const LoginForm = () => {
               )}
             </button>
           </form>
+          <div className="relative mt-4 mb-2 flex items-center justify-center">
+            <div className="w-full h-px bg-finBorder"></div>
+            <span className="absolute bg-brand-white px-3 text-[10px] uppercase text-finMuted font-bold">Or</span>
+          </div>
+
+          <div className="flex justify-center mt-2 w-full">
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                const res = await loginWithGoogle(credentialResponse.credential);
+                if (res && res.success) {
+                  navigate('/dashboard');
+                }
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+              theme="outline"
+              size="large"
+              width="100%"
+            />
+          </div>
 
           <div className="mt-4 text-center">
             <p className="text-[11px] text-finMuted">

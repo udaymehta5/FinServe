@@ -122,6 +122,30 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Google Login action
+  const loginWithGoogle = async (credential) => {
+    try {
+      const res = await api.post('/auth/google', { token: credential });
+      if (res.data.success) {
+        const { token, user: userData } = res.data;
+        localStorage.setItem('finToken', token);
+        localStorage.setItem('finUser', JSON.stringify(userData));
+        setToken(token);
+        setUser(userData);
+
+        const decoded = parseJwt(token);
+        if (decoded) setAutoLogout(decoded.exp);
+
+        showToast(`Welcome, ${userData.name}!`);
+        return { success: true };
+      }
+    } catch (error) {
+      const msg = error.response?.data?.message || 'Google Authentication failed';
+      showToast(msg, 'error');
+      return { success: false, error: msg };
+    }
+  };
+
   // Logout action
   const logout = () => {
     if (logoutTimer) clearTimeout(logoutTimer);
@@ -159,6 +183,7 @@ export const AuthProvider = ({ children }) => {
         toast,
         showToast,
         login,
+        loginWithGoogle,
         register,
         logout,
         updateProfile

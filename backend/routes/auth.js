@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
+const crypto = require('crypto');
 const User = require('../models/User');
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Helper to sign JWT
 const generateToken = (id) => {
@@ -96,6 +100,54 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     console.error('Login Error:', error.message);
     res.status(500).json({ success: false, message: 'Server error during login' });
+  }
+});
+
+// @route   POST /api/auth/google
+// @desc    Authenticate user with Google
+// @access  Public
+router.post('/google', async (req, res) => {
+  try {
+    const { token } = req.body;
+    
+    if (!token) {
+      return res.status(400).json({ success: false, message: 'No Google token provided' });
+    }
+
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email, name } = payload;
+
+    // Check if user exists
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // Create user with a strong random password since they use OAuth
+      const randomPassword = crypto.randomBytes(20).toString('hex');
+      user = await User.create({
+        name,
+        email,
+        password: randomPassword
+      });
+    }
+
+    res.json({
+      success: true,
+      token: generateToken(user._id),
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        monthlyIncome: user.monthlyIncome,
+        financialGoal: user.financialGoal
+      }
+    });
+  } catch (error) {
+    console.error('Google Auth Error:', error.message);
+    res.status(500).json({ success: false, message: 'Server error during Google authentication' });
   }
 });
 
