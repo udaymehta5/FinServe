@@ -20,7 +20,7 @@ import Settings from './pages/Settings';
 // Layout Wrapper for Protected pages
 const ProtectedLayout = ({ children }) => {
   return (
-    <div className="min-h-screen w-screen text-finText flex relative bg-transparent pb-16 md:pb-0">
+    <div className="min-h-screen w-screen text-finText flex relative bg-transparent pb-16 pt-14 md:pb-0 md:pt-0">
       {/* Sidebar Navigation */}
       <Navbar />
       

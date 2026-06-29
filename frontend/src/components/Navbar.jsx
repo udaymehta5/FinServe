@@ -27,7 +27,27 @@ const Navbar = () => {
   ];
 
   return (
-    <aside className="w-full md:w-64 h-16 md:h-screen fixed left-0 bottom-0 md:top-0 md:bottom-auto bg-finCard border-t md:border-t-0 md:border-r border-finBorder flex flex-row md:flex-col justify-between z-50">
+    <>
+      {/* Mobile Top Header */}
+      <header className="md:hidden fixed top-0 left-0 w-full h-14 bg-finCard border-b border-finBorder z-50 flex items-center justify-between px-4">
+        <NavLink to="/dashboard" className="flex items-center gap-2">
+          <div className="h-6 w-6 rounded bg-finGreen flex items-center justify-center font-black text-black text-[10px]">
+            FS
+          </div>
+          <span className="text-sm font-extrabold tracking-wider text-finText uppercase">
+            Fin<span className="text-finGreen">Serve</span>
+          </span>
+        </NavLink>
+        <button
+          onClick={logout}
+          className="flex items-center justify-center gap-1 p-1.5 rounded-lg text-[10px] font-medium text-red-400 hover:text-red-300 transition-all bg-red-500/10"
+        >
+          <LogOut className="h-4 w-4" />
+          <span>Out</span>
+        </button>
+      </header>
+
+      <aside className="w-full md:w-64 h-16 md:h-screen fixed left-0 bottom-0 md:top-0 md:bottom-auto bg-finCard border-t md:border-t-0 md:border-r border-finBorder flex flex-row md:flex-col justify-between z-50">
       
       {/* Desktop Brand Header (Hidden on Mobile) */}
       <div className="hidden md:block">
@@ -64,15 +84,6 @@ const Navbar = () => {
             </NavLink>
           );
         })}
-
-        {/* Mobile Sign Out Button (Icon Only) */}
-        <button
-          onClick={logout}
-          className="md:hidden flex flex-col items-center justify-center gap-1 p-2 rounded-lg text-[10px] font-medium text-red-400 hover:text-red-300 transition-all duration-200 flex-shrink-0 min-w-[64px]"
-        >
-          <LogOut className="h-5 w-5" />
-          <span>Sign Out</span>
-        </button>
       </nav>
 
       {/* Desktop User Details & Logout (Hidden on Mobile) */}
@@ -98,6 +109,7 @@ const Navbar = () => {
         </button>
       </div>
     </aside>
+    </>
   );
 };
 
